@@ -13,8 +13,12 @@ RUN locale-gen fr_FR.UTF-8 && update-locale
 # Install build deps
 RUN apt-get install -qy gradle android-sdk npm
 
-# Set ANDROID_HOME
+# Set ANDROID_HOME and add tools to PATH
 ENV ANDROID_HOME="/usr/lib/android-sdk/"
+ENV PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
+
+# Accept SDK licences
+RUN yes | sdkmanager --licenses
 
 # Install Ionic 6
 RUN npm install -g @ionic/cli
